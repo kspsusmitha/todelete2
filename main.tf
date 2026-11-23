@@ -7,7 +7,7 @@ terraform {
     }
   }
 
-  # Remote backend configuration
+  # S3 Remote Backend
   backend "s3" {
     bucket       = "kspsusmitha-terraform-state-2026"
     key          = "terraform/terraform.tfstate"
@@ -42,7 +42,7 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-# Create Ubuntu EC2 instance
+# Create Ubuntu EC2 Instance
 resource "aws_instance" "ubuntu_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
