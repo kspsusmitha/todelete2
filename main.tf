@@ -6,14 +6,6 @@ terraform {
       version = "~> 6.0"
     }
   }
-
-  # S3 Remote Backend
-  backend "s3" {
-    bucket       = "kspsusmitha-terraform-state-2026"
-    key          = "terraform/terraform.tfstate"
-    region       = "ap-south-2"
-    use_lockfile = true
-  }
 }
 
 # AWS Provider
