@@ -1,3 +1,4 @@
+
 terraform {
   required_providers {
     aws = {
@@ -5,14 +6,22 @@ terraform {
       version = "~> 6.0"
     }
   }
+
+  # Remote backend configuration
+  backend "s3" {
+    bucket       = "kspsusmitha-terraform-state-2026"
+    key          = "terraform/terraform.tfstate"
+    region       = "ap-south-2"
+    use_lockfile = true
+  }
 }
 
+# AWS Provider
 provider "aws" {
   region = "ap-south-2"
 }
 
 # Find the latest official Ubuntu 24.04 AMI
-
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["099720109477"]
@@ -34,7 +43,6 @@ data "aws_ami" "ubuntu" {
 }
 
 # Create Ubuntu EC2 instance
-
 resource "aws_instance" "ubuntu_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
@@ -45,7 +53,6 @@ resource "aws_instance" "ubuntu_server" {
 }
 
 # Outputs
-
 output "instance_id" {
   value = aws_instance.ubuntu_server.id
 }
@@ -55,9 +62,6 @@ output "public_ip" {
 }
 
 output "ubuntu_ami" {
-  value = aws_instance.ubuntu_server.ami
-}
-
-output "ubuntu_id" {
   value = data.aws_ami.ubuntu.id
 }
+
